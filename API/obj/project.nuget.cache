@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Z52K0cIeT7oH3Vc3o7oX6JbsAocrXznRLbbTeagv5EjKNf7LJd8745Wa2JJ6Sc3m8L+ezTJsoTV3I2t1TD0ZKw==",
+  "dgSpecHash": "Z0OVLfb9CCWGYryvu2HYnpAng1i0lVtAygdcQVpqi4OCPLkkIfdKTIij9ja2gEUz0icCiqgLzADOi8kA00ng7g==",
   "success": true,
   "projectFilePath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/API/API.csproj",
   "expectedPackageFiles": [

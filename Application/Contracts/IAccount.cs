@@ -7,6 +7,7 @@ namespace Application.Contracts;
 
 public interface IAccount
 {
+    Task CreateAdmin();
     Task<GeneralResponse> CreateAccountAsync(CreateAccountDTO model);
     Task<LoginResponse> LoginAccountAsync(LoginDTO model);
     Task<GeneralResponse> CreateRoleAsync(CreateRoleDTO model);

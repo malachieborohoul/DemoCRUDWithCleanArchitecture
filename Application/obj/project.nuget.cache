@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "y2/dJRKXYJ+P9oCJK+u+AUwzsooBfyxUv6d215F0B0sYs/qO9nvB3Lt418B5XiqJrOZv9WT98WuHIwh3LjXLIw==",
+  "dgSpecHash": "Es8rgFf5+86bMYAZItWkCZWQ3Laq/Tk2ZMMmUJ4AOvLSNT/+1NroCIvIflnsPyoDwAi7mZTIok/gzNtLVupU3A==",
   "success": true,
   "projectFilePath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Application/Application.csproj",
   "expectedPackageFiles": [

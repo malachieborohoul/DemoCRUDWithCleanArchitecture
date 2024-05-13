@@ -39,11 +39,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -112,11 +107,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -192,11 +182,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -250,6 +235,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Application/Application.csproj": {
+                "projectPath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Application/Application.csproj"
+              },
               "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Domain/Domain.csproj": {
                 "projectPath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Domain/Domain.csproj"
               }
@@ -260,11 +248,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
