@@ -14,7 +14,7 @@ public static class ServiceContainer
 {
    public static IServiceCollection AddInfrastructureService(this IServiceCollection services, IConfiguration config)
    {
-      services.AddDbContext<AppDbContext>(o => o.UseSqlServer(config.GetConnectionString("ConnectionStrings")));
+      services.AddDbContext<AppDbContext>(o => o.UseSqlServer(config.GetConnectionString("DefaultConnection")));
       services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<AppDbContext>()
          .AddSignInManager();
       services.AddAuthentication(options =>
