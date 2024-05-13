@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Gm1IT3ohHcls9Vkoctq78CVjSjeKTO3dlH9QQMWjzoqN4RJtSamUSmk+rUOhrmrZ18HRt7uMh23QnqUL0XIzpA==",
+  "dgSpecHash": "0a2Zd4gE5z86OhI1l8EA2PX1CpsBjhiuYerp7vTvhxu//B8wPRXYRpi2THyBtXMvUAvb9d3E6u4OOSfUPJjLXg==",
   "success": true,
   "projectFilePath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/Infrastructure/Infrastructure.csproj",
   "expectedPackageFiles": [
