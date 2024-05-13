@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "yYd9mlXYBP6BkTejyebFTF0iIDgUKTmH/q6ukovt7f2XZJiP2zIAZq3+l4wFSWZiF0hzWlTkTbCgYVTsk9CNnA==",
+  "dgSpecHash": "ybO5DO9IRT7VVaEWuBBxa3qAK4Ih1M5mILUAO1eCaitjJ+eqwhiHHEiBa/rf6U1Yf3vzQBhivdYW+KQ8d4CDsQ==",
   "success": true,
   "projectFilePath": "/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/WebUI/WebUI.csproj",
   "expectedPackageFiles": [
+    "/Users/bsm/.nuget/packages/mapster/7.4.0/mapster.7.4.0.nupkg.sha512",
+    "/Users/bsm/.nuget/packages/mapster.core/1.2.1/mapster.core.1.2.1.nupkg.sha512",
     "/Users/bsm/.nuget/packages/microsoft.aspnetcore.authorization/8.0.4/microsoft.aspnetcore.authorization.8.0.4.nupkg.sha512",
     "/Users/bsm/.nuget/packages/microsoft.aspnetcore.components/8.0.4/microsoft.aspnetcore.components.8.0.4.nupkg.sha512",
     "/Users/bsm/.nuget/packages/microsoft.aspnetcore.components.analyzers/8.0.4/microsoft.aspnetcore.components.analyzers.8.0.4.nupkg.sha512",
@@ -30,6 +32,10 @@
     "/Users/bsm/.nuget/packages/microsoft.jsinterop.webassembly/8.0.4/microsoft.jsinterop.webassembly.8.0.4.nupkg.sha512",
     "/Users/bsm/.nuget/packages/microsoft.net.illink.tasks/8.0.4/microsoft.net.illink.tasks.8.0.4.nupkg.sha512",
     "/Users/bsm/.nuget/packages/microsoft.net.sdk.webassembly.pack/8.0.4/microsoft.net.sdk.webassembly.pack.8.0.4.nupkg.sha512",
+    "/Users/bsm/.nuget/packages/netcodehub.packages.components.datagrid/1.0.1/netcodehub.packages.components.datagrid.1.0.1.nupkg.sha512",
+    "/Users/bsm/.nuget/packages/netcodehub.packages.components.modal/1.0.0/netcodehub.packages.components.modal.1.0.0.nupkg.sha512",
+    "/Users/bsm/.nuget/packages/netcodehub.packages.components.toast/1.0.4/netcodehub.packages.components.toast.1.0.4.nupkg.sha512",
+    "/Users/bsm/.nuget/packages/netcodehub.packages.components.validations/1.0.1/netcodehub.packages.components.validations.1.0.1.nupkg.sha512",
     "/Users/bsm/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
     "/Users/bsm/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/bsm/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
