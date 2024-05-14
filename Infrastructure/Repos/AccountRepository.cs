@@ -7,7 +7,9 @@ using Application.DTOs;
 using Application.DTOs.Request.Account;
 using Application.DTOs.Response;
 using Application.DTOs.Response.Account;
+using Application.Extensions;
 using Domain.Entity.Authentication;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -53,22 +55,127 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
         }
 
 
+        private async Task<GeneralResponse> AssignUserToRole(ApplicationUser user, IdentityRole role)
+        {
+            if (user is null || role is null) return new GeneralResponse(false, "Model state cannot be empty");
+            if (await FindRoleByNameAsync(role.Name) == null)
+                //Mapter to map
+                await CreateRoleAsync(role.Adapt(new CreateRoleDTO()));
+            IdentityResult result = await userManager.AddToRoleAsync(user, role.Name);
+            string error = CheckResponse(result);
+            if (!string.IsNullOrEmpty(error))
+                return new GeneralResponse(false, error);
+            else
+                return new GeneralResponse(true, $"{user.Name} assigned to {role.Name} role");
+        }
+
+
+        private static string CheckResponse(IdentityResult result)
+        {
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(_ => _.Description);
+                return string.Join(Environment.NewLine, errors);
+            }
+
+            return null!;
+        }
+
+
     #endregion
     
     
     public async Task CreateAdmin()
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (await FindRoleByNameAsync(Constant.Role.Admin) != null) return;
+            var admin = new CreateAccountDTO()
+            {
+                Name = "Admin",
+                Password = "Admin",
+                EmailAddress = "admin@admin.com",
+                Role = Constant.Role.Admin
+            };
+            await CreateAccountAsync(admin);
+        }
+        catch (Exception e)
+        {
+           
+        }
     }
 
     public async Task<GeneralResponse> CreateAccountAsync(CreateAccountDTO model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (await FindUserByEmailAsync(model.EmailAddress) != null)
+                return new GeneralResponse(false, "Sorry, user is already created");
+            var user = new ApplicationUser()
+            {
+                Name = model.Name,
+                UserName = model.EmailAddress,
+                Email = model.EmailAddress,
+                PasswordHash = model.Password
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
+            string error = CheckResponse(result);
+            if (!string.IsNullOrEmpty(error))
+                return new GeneralResponse(false, error);
+            var (flag, message) = await AssignUserToRole(user, new IdentityRole() { Name = model.Role });
+
+            return new GeneralResponse(flag, message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<LoginResponse> LoginAccountAsync(LoginDTO model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            //Check if email exists
+            var user = await FindUserByEmailAsync(model.EmailAddress);
+            if (user is null)
+                return new LoginResponse(false, "User not found");
+            SignInResult result;
+            
+            //If it exists
+
+            try
+            {
+                result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false); 
+            }
+            catch (Exception e)
+            {
+                return new LoginResponse(false, "Invalid credentials");
+            }
+            
+            // Password doesnt match
+            if (!result.Succeeded)
+                return new LoginResponse(false, "Invalid credentials");
+            
+            //Password match
+
+            string jwtToken = await GenerateToken(user);
+            var refreshToken = GenerateRefreshToken();
+            
+            if (string.IsNullOrEmpty(jwtToken) || string.IsNullOrEmpty(refreshToken))
+                return new LoginResponse(false, "Error occured while logging in account, please contact administration");
+            else
+                return new LoginResponse(true, $"{user.Name} successfully logged in", jwtToken, refreshToken);
+
+
+
+
+        }
+        catch (Exception e)
+        {
+            return new LoginResponse(false, e.Message);
+        }
     }
 
     public async Task<GeneralResponse> CreateRoleAsync(CreateRoleDTO model)

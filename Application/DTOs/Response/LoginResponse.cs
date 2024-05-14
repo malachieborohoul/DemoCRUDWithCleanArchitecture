@@ -1,3 +1,3 @@
 namespace Application.DTOs;
 
-public record LoginResponse(bool Flag, string Message = null!, string Tokken= null!, string RefreshToken = null!);
+public record LoginResponse(bool Flag, string Message = null!, string Token= null!, string RefreshToken = null!);
