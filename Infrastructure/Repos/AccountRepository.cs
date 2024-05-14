@@ -9,14 +9,16 @@ using Application.DTOs.Response;
 using Application.DTOs.Response.Account;
 using Application.Extensions;
 using Domain.Entity.Authentication;
+using Infrastructure.Data;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Repos;
 
-public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IConfiguration config, SignInManager<ApplicationUser> signInManager):IAccount
+public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IConfiguration config, SignInManager<ApplicationUser> signInManager, AppDbContext context):IAccount
 {
     #region Add often used methods
 
@@ -143,7 +145,7 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
                 return new LoginResponse(false, "User not found");
             SignInResult result;
             
-            //If it exists
+            //If email exists
 
             try
             {
@@ -163,10 +165,21 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
             string jwtToken = await GenerateToken(user);
             var refreshToken = GenerateRefreshToken();
             
+            // Token or Refresh token empty
             if (string.IsNullOrEmpty(jwtToken) || string.IsNullOrEmpty(refreshToken))
                 return new LoginResponse(false, "Error occured while logging in account, please contact administration");
+            
+            // If not save the refresh token in the db and return successfull message
             else
-                return new LoginResponse(true, $"{user.Name} successfully logged in", jwtToken, refreshToken);
+            {
+                var saveResult = await SaveRefreshToken(user.Id, refreshToken);
+                if (saveResult.Flag)
+                    return new LoginResponse(true, $"{user.Name} successfully logged in", jwtToken, refreshToken);
+
+                else
+                    return new LoginResponse();
+
+            }
 
 
 
@@ -178,6 +191,22 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
         }
     }
 
+    public async Task<LoginResponse> RefreshTokenAsync(RefreshTokenDTO model)
+    {
+        var token = await context.RefreshTokens.FirstOrDefaultAsync(t => t.Token == model.Token);
+        if (token is null) return new LoginResponse();
+        var user = await userManager.FindByIdAsync(token.UserID);
+        string newToken = await GenerateToken(user);
+        string newRefreshToken = GenerateRefreshToken();
+
+        var saveResult = await SaveRefreshToken(user.Id, newRefreshToken);
+
+        if (saveResult.Flag)
+            return new LoginResponse(true, $"{user.Name} successfully re-logged in", newToken, newRefreshToken);
+        else
+            return new LoginResponse();
+    }
+
     public async Task<GeneralResponse> CreateRoleAsync(CreateRoleDTO model)
     {
         throw new NotImplementedException();
@@ -185,16 +214,79 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
 
     public async Task<IEnumerable<GetRoleDTO>> GetRolesAsync()
     {
-        throw new NotImplementedException();
+        return (await roleManager.Roles.ToListAsync()).Adapt<IEnumerable<GetRoleDTO>>();
     }
 
     public async Task<IEnumerable<GetUsersWithRolesResponseDTO>> GetUsersWithRolesAsync()
     {
-        throw new NotImplementedException();
+        //Get all the users
+        var allusers = await userManager.Users.ToListAsync();
+        if (allusers is null) return null;
+
+        var List = new List<GetUsersWithRolesResponseDTO>();
+
+        foreach (var user in allusers)
+        {
+            //for each user retreive User role infos
+            var getUserRole = (await userManager.GetRolesAsync(user)).FirstOrDefault();
+            var getRoleInfo =
+                await roleManager.Roles.FirstOrDefaultAsync(r => r.Name.ToLower() == getUserRole.ToLower());
+            
+            // Add it in the DTO
+            List.Add(new GetUsersWithRolesResponseDTO()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                RoleId = getRoleInfo.Id,
+                RoleName = getRoleInfo.Name
+            });
+        }
+
+        return List;
     }
 
     public async Task<GeneralResponse> ChangeUserRoleAsync(ChangeUserRoleRequestDTO model)
     {
-        throw new NotImplementedException();
+        // Verify if role and email exist
+        if (await FindRoleByNameAsync(model.RoleName) is null) return new GeneralResponse(false, "Role not found");
+        if (await FindUserByEmailAsync(model.UserEmail) is null) return new GeneralResponse(false, "User not found");
+        
+        var user = await FindUserByEmailAsync(model.UserEmail);
+        var previousRole = (await userManager.GetRolesAsync(user)).FirstOrDefault();
+        // Remove previous role of the user
+        var removeOldRole = await userManager.RemoveFromRoleAsync(user, previousRole);
+        //Check error
+        var error = CheckResponse(removeOldRole);
+        if (!string.IsNullOrEmpty(error))
+            return new GeneralResponse(false, error);
+        
+        //No error add assign role to user
+        var result = await userManager.AddToRoleAsync(user, model.RoleName);
+        //Check response
+        var response = CheckResponse(result);
+        if (!string.IsNullOrEmpty(response))
+            return new GeneralResponse(false, response);
+        else
+            return new GeneralResponse(true, "Role Changed");
+
+
+    }
+
+    private async Task<GeneralResponse> SaveRefreshToken(string userId, string token)
+    {
+        try
+        {
+            var user = await context.RefreshTokens.FirstOrDefaultAsync(t => t.UserID == userId);
+            if (user == null)
+                context.RefreshTokens.Add(new RefreshToken() { UserID = userId, Token = token });
+            else
+                user.Token = token;
+            await context.SaveChangesAsync();
+            return new GeneralResponse(true, null!);
+        }
+        catch (Exception e)
+        {
+            return new GeneralResponse(false, e.Message);
+        }
     }
 }

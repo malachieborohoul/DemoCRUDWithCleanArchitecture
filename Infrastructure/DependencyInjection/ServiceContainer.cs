@@ -1,6 +1,8 @@
 using System.Text;
+using Application.Contracts;
 using Domain.Entity.Authentication;
 using Infrastructure.Data;
+using Infrastructure.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +49,8 @@ public static class ServiceContainer
                .AllowAnyHeader()
                .AllowCredentials());
       });
+
+      services.AddScoped<IAccount, AccountRepository>();
       return services;
    }
 }

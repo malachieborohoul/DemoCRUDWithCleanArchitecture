@@ -10,4 +10,6 @@ public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
         
     }
+    
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 }
