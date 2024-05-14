@@ -95,15 +95,15 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
             var admin = new CreateAccountDTO()
             {
                 Name = "Admin",
-                Password = "Admin",
+                Password = "Admin@123",
                 EmailAddress = "admin@admin.com",
                 Role = Constant.Role.Admin
             };
             await CreateAccountAsync(admin);
         }
-        catch (Exception e)
+        catch 
         {
-           
+
         }
     }
 
@@ -130,8 +130,7 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return new GeneralResponse(false, e.Message); 
         }
     }
 
@@ -209,7 +208,26 @@ public class AccountRepository(RoleManager<IdentityRole> roleManager, UserManage
 
     public async Task<GeneralResponse> CreateRoleAsync(CreateRoleDTO model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (await FindRoleByNameAsync(model.Name) == null)
+            {
+                //Create role
+                var response = await roleManager.CreateAsync(new IdentityRole(model.Name));
+                var error = CheckResponse(response);
+                if (!string.IsNullOrEmpty(error))
+                    throw new Exception(error);
+                else
+                    return new GeneralResponse(true, $"{model.Name} created");
+            }
+            return new GeneralResponse(false, $"{model.Name} already created");
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task<IEnumerable<GetRoleDTO>> GetRolesAsync()
