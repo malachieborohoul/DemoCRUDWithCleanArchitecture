@@ -38,14 +38,15 @@
 <Modal @bind-Open="IsOpen" Actions="ButtonActions" BootstrapClass=@BorderClass CustomStyle="min-width:250px; max-width:300px;">
     <ContentContent>
         <span class="text-center text-muted">
-            <div class="card border-@BorderClass">
-                <div class="card-header">Information</div>
-                <div class="card-body text-muted"> @Message</div>
-            </div>
-        </span> </ContentContent>
+        <div class="card border-@BorderClass">
+        <div class="card-header">Information</div>
+        <div class="card-body text-muted"> @Message</div>
+        </div>
+        </span>
+    </ContentContent>
     <ButtonTemplate>
         <div class="d-flex justify-content-center align-content-center">
-            <button class="@ButtonClass btn-sm" value="ok" style="margin-right:5px">0kay</button>
+            <button class="@ButtonClass btn-sm" value="ok" style="margin-right:5px">Okay</button>
         </div>
     </ButtonTemplate>
 </Modal>

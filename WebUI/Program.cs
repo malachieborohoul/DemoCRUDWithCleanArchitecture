@@ -1,6 +1,7 @@
 using Application.DependencyInjection;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using NetcodeHub.Packages.Components.DataGrid;
 using NetcodeHub.Packages.Components.Toast;
 using WebUI;
 
@@ -10,5 +11,5 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddApplicationService();
 builder.Services.AddScoped<ToastModel>();
-
+builder.Services.AddVirtualizationService();
 await builder.Build().RunAsync();
