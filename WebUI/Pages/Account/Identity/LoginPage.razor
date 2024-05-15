@@ -1,8 +1,5 @@
 @page "/account/identity/login"
-@using Application.DTOs.Request.Account
-@using WebUI.Layout.Account.Identity
-@using NetcodeHub.Packages.Components.Modal
-@using NetcodeHub.Packages.Components.Validations.OnInput
+
 @layout AuthenticationLayout
 
 
@@ -14,7 +11,7 @@
         <div class="card-header text-dark fs-4 border-primary">Login</div> 
         <div class="card-body" style="opacity:1">
             <DataAnnotationsValidator />
-            <FloatingText class="form-control mb-3" Label="Email Address" Placeholder="JohnDoe@email.com" @bind-Value="LoginModel.Password"/> 
+            <FloatingText class="form-control mb-3" Label="Email Address" Placeholder="JohnDoe@email.com" @bind-Value="LoginModel.EmailAddress"/> 
             <FloatingText Label="User Password" Type="@PasswordType" class="form-control" @bind-Value="LoginModel.Password" /> 
             <a class="btn btn-link text-decoration-none float-end" style="margin-top:-20px" onclick="ChangePasswordType"><small>@DisplayText</small></a>
             <div class="form-group align-content-end">

@@ -23,9 +23,9 @@ public static class ServiceContainer
         services.AddScoped<HttpClientService>();
         services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
         services. AddTransient<CustomHttpHandler>(); services.AddCascadingAuthenticationState();
-        services. AddHttpClient("WebUIClient", client =>
+        services. AddHttpClient(Constant.HttpClientName, client =>
         {
-            client.BaseAddress = new Uri("https://localhost:7266/"); }).AddHttpMessageHandler<CustomHttpHandler>();
+            client.BaseAddress = new Uri("https://localhost:7063/"); }).AddHttpMessageHandler<CustomHttpHandler>();
         return services;
     }
 }
