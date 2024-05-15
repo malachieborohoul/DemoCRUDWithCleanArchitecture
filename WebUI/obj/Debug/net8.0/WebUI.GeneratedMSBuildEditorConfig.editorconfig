@@ -26,6 +26,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/WebUI/Layout/Account/Administration/RegisterPage.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L0FjY291bnQvQWRtaW5pc3RyYXRpb24vUmVnaXN0ZXJQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/WebUI/Layout/Account/Administration/UsersPage.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L0FjY291bnQvQWRtaW5pc3RyYXRpb24vVXNlcnNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/bsm/Documents/projects/dot net/DemoCRUDWithCleanArchitecture/WebUI/Layout/Account/Identity/AuthenticationLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L0FjY291bnQvSWRlbnRpdHkvQXV0aGVudGljYXRpb25MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
