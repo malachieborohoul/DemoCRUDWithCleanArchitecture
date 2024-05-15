@@ -8,3 +8,10 @@
 @using Microsoft.JSInterop
 @using WebUI
 @using WebUI.Layout
+@using Application.Extensions
+@using Application.Services
+@using Microsoft.AspNetCore.Components.Authorization
+
+@inject IAccountService accountService
+@inject NavigationManager NavManager
+@inject AuthenticationStateProvider AuthStateProvider
